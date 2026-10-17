@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>学习之道 · 11 天要点册</title>
+<meta name="theme-color" content="#F2E23A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="学习之道">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--yel:#F2E23A;--yel2:#E8D42E;--ink:#1A1A1A;--soft:#6B6350;--blue:#7EB6D9;--org:#E8A13C;--grn:#8FBF6F;--pnk:#E8918F;--line:#E5DCA8;--card:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--yel);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;line-height:1.75;display:flex;justify-content:center;padding:16px 14px calc(46px + env(safe-area-inset-bottom));min-height:100vh;position:relative;overflow-x:hidden}
+.wrap{width:100%;max-width:440px;position:relative;z-index:2}
+/* 涂鸦装饰层 */
+.doodle{position:absolute;z-index:1;pointer-events:none;opacity:.9}
+/* ============ 封面页 ============ */
+#cover{position:relative}
+.cover-top{display:flex;justify-content:center;margin-bottom:14px}
+.press{background:#fff;border-radius:6px;padding:5px 12px;font-size:9px;letter-spacing:.18em;color:#2E7D4F;font-weight:800;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.press .pb{width:14px;height:14px;background:#2E7D4F;color:#fff;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900}
+.bookcard{background:var(--card);border-radius:10px;padding:26px 22px 24px;text-align:center;box-shadow:0 10px 34px rgba(0,0,0,.14);position:relative}
+.bookcard .tag{font-size:11px;color:var(--blue);letter-spacing:.28em;font-weight:800;margin-bottom:10px}
+.bookcard .bt{font-size:37px;font-weight:900;letter-spacing:.14em;line-height:1.25;margin-bottom:12px;font-family:"Noto Serif SC","Songti SC",serif}
+.bookcard .au{font-size:10.5px;color:#444;line-height:1.9}
+.bookcard .tr{font-size:10.5px;color:#666;margin-top:2px}
+.bookcard .dv{height:1px;background:#E8E2CE;margin:16px 24px}
+.bookcard .en{font-family:Georgia,"Times New Roman",serif;font-size:23px;letter-spacing:.06em;color:#1A1A1A;margin-bottom:5px;font-weight:600}
+.bookcard .sb{font-family:Georgia,serif;font-size:9.5px;color:#8A8266;letter-spacing:.02em}
+.cover-cta{margin-top:16px}
+.cbtn{display:block;width:100%;border:2px solid #1A1A1A;background:#1A1A1A;color:var(--yel);font-size:14px;font-weight:800;letter-spacing:.3em;padding:14px 0 14px .3em;border-radius:99px;cursor:pointer;font-family:inherit;box-shadow:4px 4px 0 rgba(0,0,0,.18);transition:transform .15s}
+.cbtn:active{transform:scale(.97)}
+.cover-note{margin-top:12px;text-align:center;font-size:9.5px;color:rgba(26,26,26,.55);letter-spacing:.1em}
+/* ============ 总览页 ============ */
+.page{display:none}
+.page.show{display:block}
+.ovhead{background:#fff;border-radius:10px;padding:16px 16px 13px;box-shadow:0 6px 22px rgba(0,0,0,.1);margin-bottom:14px}
+.ovhead .ot{font-size:19px;font-weight:900;letter-spacing:.06em}
+.ovhead .os{font-size:10px;color:var(--soft);margin-top:3px;letter-spacing:.06em}
+.ovhead .obar{height:8px;background:#F0EBC8;border-radius:99px;margin-top:11px;overflow:hidden}
+.ovhead .obar .fl{height:100%;background:linear-gradient(90deg,#E8A13C,#E8918F,#7EB6D9);border-radius:99px;transition:width .5s}
+.ovhead .ost{font-size:9px;color:var(--soft);margin-top:5px;letter-spacing:.14em;font-variant-numeric:tabular-nums}
+.daygrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px}
+.dcard{background:#fff;border-radius:10px;padding:12px 13px;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.08);transition:transform .15s;position:relative;overflow:hidden}
+.dcard:active{transform:scale(.97)}
+.dcard .dn{font-family:Georgia,serif;font-style:italic;font-size:10px;font-weight:800;color:var(--org);letter-spacing:.08em}
+.dcard .dt{font-size:13px;font-weight:800;line-height:1.45;margin-top:3px;letter-spacing:.02em}
+.dcard .dm{font-size:9px;color:var(--soft);margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.dcard.read{background:#1A1A1A}
+.dcard.read .dn{color:var(--yel)}
+.dcard.read .dt{color:#fff}
+.dcard.read .dm{color:#B9B29A}
+.dcard.read::after{content:"✓";position:absolute;right:10px;top:9px;color:var(--yel);font-weight:900;font-size:13px}
+.auxrow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.acard{background:rgba(255,255,255,.55);border:1.5px dashed rgba(26,26,26,.28);border-radius:10px;padding:11px 13px;cursor:pointer;text-align:center}
+.acard:active{transform:scale(.97)}
+.acard .at{font-size:12.5px;font-weight:800}
+.acard .as{font-size:9px;color:var(--soft);margin-top:2px;letter-spacing:.08em}
+.foot-src{background:rgba(255,255,255,.5);border-radius:10px;padding:11px 14px;font-size:9px;color:rgba(26,26,26,.6);line-height:1.8;text-align:center}
+/* ============ 内容页 ============ */
+.backrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.bbtn{background:rgba(255,255,255,.75);border:1.5px solid rgba(26,26,26,.25);color:#1A1A1A;font-size:10px;letter-spacing:.14em;padding:7px 14px;border-radius:99px;cursor:pointer;font-family:inherit;font-weight:700}
+.navbtns{display:flex;gap:8px;margin-top:16px}
+.nb{flex:1;border:2px solid #1A1A1A;background:#fff;color:#1A1A1A;font-size:12px;font-weight:800;letter-spacing:.1em;padding:11px 0;border-radius:99px;cursor:pointer;font-family:inherit;box-shadow:3px 3px 0 rgba(0,0,0,.14);transition:transform .15s}
+.nb:active{transform:scale(.97)}
+.nb.dark{background:#1A1A1A;color:var(--yel)}
+.artcard{background:#fff;border-radius:12px;padding:20px 18px 18px;box-shadow:0 8px 26px rgba(0,0,0,.1)}
+.daybadge{display:inline-flex;align-items:center;gap:7px;background:var(--yel2);border:2px solid #1A1A1A;border-radius:99px;padding:4px 13px;font-size:10.5px;font-weight:900;letter-spacing:.14em;margin-bottom:10px}
+.artcard h2{font-size:21px;font-weight:900;line-height:1.4;letter-spacing:.03em;margin-bottom:14px;font-family:"Noto Serif SC","Songti SC",serif}
+.pts{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
+.pt{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;background:#FAF7E8;border-radius:9px;cursor:pointer;transition:all .18s;border:1.5px solid transparent}
+.pt:active{transform:scale(.985)}
+.pt .box{width:17px;height:17px;border-radius:5px;border:2px solid #C9C19A;flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:transparent;transition:all .18s}
+.pt .tx{font-size:12.8px;font-weight:600;line-height:1.6}
+.pt.on{background:#1A1A1A;border-color:#1A1A1A}
+.pt.on .box{background:var(--yel);border-color:var(--yel);color:#1A1A1A}
+.pt.on .tx{color:#D9D2B8}
+.keycard{background:#FFF8D6;border:2px solid #1A1A1A;border-radius:10px;padding:12px 14px;position:relative;box-shadow:3px 3px 0 rgba(0,0,0,.12)}
+.keycard .kt{display:inline-block;background:#1A1A1A;color:var(--yel);font-size:9px;font-weight:900;letter-spacing:.22em;padding:3px 10px;border-radius:99px;margin-bottom:7px}
+.keycard .kv{font-size:12.5px;font-weight:700;line-height:1.75}
+/* 核查表 */
+.cl-day{margin-bottom:10px}
+.cl-day .cd{font-family:Georgia,serif;font-style:italic;font-weight:900;font-size:11px;color:var(--org);letter-spacing:.06em;margin-bottom:5px}
+.donebanner{display:none;background:#1A1A1A;color:var(--yel);border-radius:12px;padding:16px;text-align:center;margin-bottom:14px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.donebanner.show{display:block;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+.donebanner .db1{font-family:Georgia,serif;font-style:italic;font-size:16px;font-weight:900}
+.donebanner .db2{font-size:10.5px;color:#D9D2B8;margin-top:4px;letter-spacing:.1em}
+/* 尾页 */
+.endcard{background:#fff;border-radius:12px;padding:22px 18px;text-align:center;box-shadow:0 8px 26px rgba(0,0,0,.1);margin-bottom:12px}
+.endcard .e1{font-family:Georgia,serif;font-style:italic;font-size:22px;font-weight:900;color:#1A1A1A}
+.endcard .e2{font-size:12px;color:var(--soft);margin-top:6px;letter-spacing:.12em}
+.endcard .e3{font-size:11px;color:#444;line-height:1.9;margin-top:14px;text-align:left}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:rgba(255,255,255,.7);border-radius:10px;padding:11px 6px;text-align:center}
+.stat .sn{font-size:19px;font-weight:900;font-variant-numeric:tabular-nums}
+.stat .sl{font-size:8.5px;color:var(--soft);letter-spacing:.2em;margin-top:1px}
+.pgm{margin-top:16px;text-align:center;font-size:9px;color:rgba(26,26,26,.5);letter-spacing:.2em}
+.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(30px);background:#1A1A1A;color:var(--yel);font-size:11.5px;font-weight:800;padding:10px 22px;border-radius:99px;opacity:0;transition:all .3s;pointer-events:none;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.4);letter-spacing:.06em}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<!-- 涂鸦装饰（封面页） -->
+<div class="doodle" id="doodleLayer" style="position:fixed;inset:0;z-index:1"></div>
+<div class="wrap" style="z-index:2">
+
+  <!-- 封面页 -->
+  <div id="cover">
+    <div class="cover-top"><div class="press"><span class="pb">1</span>11 天高效入门版</div></div>
+    <div class="bookcard">
+      <div class="tag">11 天高效入门版</div>
+      <div class="bt">学习之道</div>
+      <div class="au">【美】芭芭拉·奥克利（Barbara Oakley）　著<br>【挪威】奥拉夫·舍韦（Olav Schewe）　著</div>
+      <div class="tr">汪幼枫　黄创　译</div>
+      <div class="dv"></div>
+      <div class="en">LEARN LIKE A PRO</div>
+      <div class="sb">Science-Based Tools to Become Better at Anything</div>
+    </div>
+    <div class="cover-cta"><button class="cbtn" id="startBtn">翻开这本小册子</button></div>
+    <div class="cover-note">基于认知科学的 11 天学习工具箱 · 每天一个主题 · 要点全收录</div>
+  </div>
+
+  <!-- 总览页 -->
+  <div class="page" id="ovPage">
+    <div class="backrow"><span></span><button class="bbtn" id="toCover">‹ 封面</button></div>
+    <div class="ovhead">
+      <div class="ot">11 天 · 走完一轮</div>
+      <div class="os">每天一个主题：点开一天，把要点逐条点亮</div>
+      <div class="obar"><div class="fl" id="ovFl" style="width:0%"></div></div>
+      <div class="ost" id="ovSt">已读 0 / 11 天</div>
+    </div>
+    <div class="daygrid" id="dayGrid"></div>
+    <div class="auxrow">
+      <div class="acard" data-go="pre"><div class="at">前言</div><div class="as">PRELUDE</div></div>
+      <div class="acard" data-go="cl"><div class="at">核查表</div><div class="as">CHECKLIST</div></div>
+    </div>
+    <div class="foot-src" id="footSrc"></div>
+  </div>
+
+  <!-- 前言页 -->
+  <div class="page" id="prePage">
+    <div class="backrow"><button class="bbtn" id="preBack">‹ 目录</button><span></span></div>
+    <div class="artcard">
+      <div class="daybadge">前言 · PRELUDE</div>
+      <h2>为什么你需要这本书</h2>
+      <div class="pts" id="prePts"></div>
+      <div class="keycard"><div class="kt">今日划重点</div><div class="kv" id="preKey"></div></div>
+      <div class="navbtns"><button class="nb dark" id="preNext">开始第 1 天 ›</button></div>
+    </div>
+  </div>
+
+  <!-- 每天页 -->
+  <div class="page" id="dayPage">
+    <div class="backrow"><button class="bbtn" id="dayBack">‹ 目录</button><button class="bbtn" id="toCl">核查表 ›</button></div>
+    <div class="donebanner" id="dayDone"><div class="db1">This day is done.</div><div class="db2" id="dayDoneTx"></div></div>
+    <div class="artcard">
+      <div class="daybadge" id="dayBadge"></div>
+      <h2 id="dayTitle"></h2>
+      <div class="pts" id="dayPts"></div>
+      <div class="keycard"><div class="kt">今日划重点</div><div class="kv" id="dayKey"></div></div>
+      <div class="navbtns">
+        <button class="nb" id="prevDay">‹ 上一天</button>
+        <button class="nb dark" id="nextDay">下一天 ›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 核查表页 -->
+  <div class="page" id="clPage">
+    <div class="backrow"><button class="bbtn" id="clBack">‹ 目录</button><span></span></div>
+    <div class="ovhead" style="margin-bottom:12px">
+      <div class="ot">核查表 · 高效学习者</div>
+      <div class="os">11 天全部要点浓缩成一张检查清单——做到了就打勾</div>
+      <div class="obar"><div class="fl" id="clFl" style="width:0%"></div></div>
+      <div class="ost" id="clSt">已勾 0 条</div>
+    </div>
+    <div class="artcard" id="clHost"></div>
+    <div class="navbtns"><button class="nb dark" id="clEnd">看毕业页 ›</button></div>
+  </div>
+
+  <!-- 尾页 -->
+  <div class="page" id="endPage">
+    <div class="backrow"><button class="bbtn" id="endBack">‹ 核查表</button><span></span></div>
+    <div class="endcard">
+      <div class="e1">Keep learning.</div>
+      <div class="e2">11 天走完 · 学习之道毕业页</div>
+      <div class="e3" id="endStats"></div>
+    </div>
+    <div class="foot-src" id="footSrc2"></div>
+    <div class="pgm">LEARN LIKE A PRO · OAKLEY × SCHEWE</div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script>
+(function(){
+"use strict";
+var B=window.BOOK;
+var S=null;try{S=window.localStorage}catch(e){}
+function load(){if(!S)return{};try{return JSON.parse(S.getItem("llap.v1")||"{}")}catch(e){return{}}}
+function save(){if(S)try{S.setItem("llap.v1",JSON.stringify(st))}catch(e){}}
+var st=load();
+if(!st.pts)st.pts={};if(!st.cl)st.cl={};if(!st.days)st.days={};
+var $=function(x){return document.getElementById(x)};
+var toastT;
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("show")},1800)}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+/* ===== 涂鸦装饰层 ===== */
+var DOODLES=[
+  {l:"6%",t:"4%",r:-14,s:52,c:"#7EB6D9",ch:"L"},{l:"22%",t:"9%",r:8,s:38,c:"#E8918F",ch:"E"},
+  {l:"38%",t:"3%",r:-6,s:46,c:"#8FBF6F",ch:"A"},{l:"58%",t:"8%",r:12,s:40,c:"#E8A13C",ch:"R"},
+  {l:"78%",t:"4%",r:-10,s:50,c:"#7EB6D9",ch:"N"},
+  {l:"3%",t:"38%",r:-8,s:34,c:"#E8A13C",ch:"L"},{l:"88%",t:"42%",r:10,s:36,c:"#8FBF6F",ch:"I"},
+  {l:"8%",t:"62%",r:6,s:44,c:"#E8918F",ch:"K"},{l:"82%",t:"66%",r:-12,s:46,c:"#E8A13C",ch:"E"},
+  {l:"20%",t:"88%",r:-8,s:40,c:"#7EB6D9",ch:"P"},{l:"52%",t:"92%",r:7,s:44,c:"#E8918F",ch:"R"},
+  {l:"76%",t:"86%",r:-6,s:42,c:"#8FBF6F",ch:"O"}
+];
+var ICONS=[
+  {l:"70%",t:"14%",s:40,c:"#8FBF6F",type:"oct"},
+  {l:"6%",t:"20%",s:38,c:"#E8918F",type:"brain"},
+  {l:"86%",t:"26%",s:34,c:"#7EB6D9",type:"clock"},
+  {l:"12%",t:"76%",s:36,c:"#E8A13C",type:"target"},
+  {l:"70%",t:"76%",s:34,c:"#7EB6D9",type:"pencil"},
+  {l:"42%",t:"70%",s:30,c:"#E8918F",type:"q"}
+];
+function doodleHTML(){
+  var h="";
+  DOODLES.forEach(function(d){
+    h+='<div class="doodle" style="left:'+d.l+';top:'+d.t+';transform:rotate('+d.r+'deg)"><span style="font-size:'+d.s+'px;font-weight:900;color:#fff;-webkit-text-stroke:2.5px '+d.c+';text-shadow:3px 3px 0 '+d.c+';font-family:Georgia,serif;font-style:italic;display:inline-block;line-height:1">'+d.ch+'</span></div>';
+  });
+  ICONS.forEach(function(d){
+    var p="";
+    if(d.type==="oct")p='<circle cx="20" cy="14" r="9" fill="none" stroke="'+d.c+'" stroke-width="2.6"/><circle cx="17" cy="12" r="1.6" fill="'+d.c+'"/><circle cx="23" cy="12" r="1.6" fill="'+d.c+'"/><path d="M12 22 Q10 30 14 34 M17 23 Q17 31 20 36 M23 23 Q24 31 27 34 M28 21 Q31 28 29 33" fill="none" stroke="'+d.c+'" stroke-width="2.4" stroke-linecap="round"/>';
+    if(d.type==="brain")p='<path d="M12 20 Q8 12 16 10 Q18 4 25 7 Q32 4 33 12 Q38 16 33 22 Q34 28 26 28 Q20 32 15 27 Q9 27 12 20 Z" fill="none" stroke="'+d.c+'" stroke-width="2.4"/><path d="M22 8 Q20 16 22 27 M27 9 Q29 16 27 26" fill="none" stroke="'+d.c+'" stroke-width="1.8"/>';
+    if(d.type==="clock")p='<circle cx="20" cy="21" r="12" fill="none" stroke="'+d.c+'" stroke-width="2.6"/><path d="M20 13 V21 L26 24" fill="none" stroke="'+d.c+'" stroke-width="2.4" stroke-linecap="round"/><path d="M8 8 L12 4 M32 8 L28 4" stroke="'+d.c+'" stroke-width="2.4" stroke-linecap="round"/>';
+    if(d.type==="target")p='<circle cx="20" cy="20" r="12" fill="none" stroke="'+d.c+'" stroke-width="2.4"/><circle cx="20" cy="20" r="6.5" fill="none" stroke="'+d.c+'" stroke-width="2.2"/><circle cx="20" cy="20" r="1.8" fill="'+d.c+'"/><path d="M20 20 L32 6" stroke="'+d.c+'" stroke-width="2.2" stroke-linecap="round"/><path d="M32 6 L27 7 M32 6 L31 11" stroke="'+d.c+'" stroke-width="2.2" stroke-linecap="round"/>';
+    if(d.type==="pencil")p='<path d="M10 30 L14 28 L28 10 L24 6 L10 24 Z" fill="none" stroke="'+d.c+'" stroke-width="2.4" stroke-linejoin="round"/><path d="M10 30 L14 28 L11 26 Z" fill="'+d.c+'"/>';
+    if(d.type==="q")p='<text x="12" y="32" font-size="28" font-weight="900" fill="none" stroke="'+d.c+'" stroke-width="1.8" font-family="Georgia,serif">?</text>';
+    h+='<div class="doodle" style="left:'+d.l+';top:'+d.t+'"><svg width="'+d.s+'" height="'+d.s+'" viewBox="0 0 40 40">'+p+'</svg></div>';
+  });
+  return h;
+}
+$("doodleLayer").innerHTML=doodleHTML();
+
+/* ===== 导航 ===== */
+var pages=["cover","ovPage","prePage","dayPage","clPage","endPage"];
+function show(id){
+  pages.forEach(function(p){if(p==="cover"){$("cover").style.display=id==="cover"?"block":"none"}else{$(p).classList.toggle("show",p===id)}});
+  var d=id==="cover"||id==="ovPage";
+  $("doodleLayer").style.opacity=d?"1":"0.12";
+  window.scrollTo(0,0);
+}
+$("startBtn").onclick=function(){renderOv();show("ovPage")};
+$("toCover").onclick=function(){show("cover")};
+$("preBack").onclick=function(){renderOv();show("ovPage")};
+$("dayBack").onclick=function(){renderOv();show("ovPage")};
+$("clBack").onclick=function(){renderOv();show("ovPage")};
+$("endBack").onclick=function(){show("clPage")};
+$("toCl").onclick=function(){renderCl();show("clPage")};
+
+/* ===== 总览 ===== */
+function dayRead(dn){var d=B.days[dn-1];return d.pts.every(function(_,i){return st.pts["d"+dn+"_"+i]})}
+function renderOv(){
+  var html="";
+  B.days.forEach(function(d,i){
+    var dn=i+1,read=dayRead(dn),cnt=0;
+    d.pts.forEach(function(_,pi){if(st.pts["d"+dn+"_"+pi])cnt++});
+    html+='<div class="dcard'+(read?" read":"")+'" data-d="'+dn+'"><div class="dn">DAY '+dn+'</div><div class="dt">'+esc(d.t)+'</div><div class="dm">'+cnt+' / '+d.pts.length+' 要点</div></div>';
+  });
+  $("dayGrid").innerHTML=html;
+  document.querySelectorAll(".dcard").forEach(function(el){
+    el.onclick=function(){openDay(+el.getAttribute("data-d"))};
+  });
+  document.querySelectorAll(".acard").forEach(function(el){
+    el.onclick=function(){var g=el.getAttribute("data-go");if(g==="pre")openPre();else{renderCl();show("clPage")}};
+  });
+  var readN=0;B.days.forEach(function(_,i){if(dayRead(i+1))readN++});
+  $("ovFl").style.width=(readN*100/11)+"%";
+  $("ovSt").textContent="已读 "+readN+" / 11 天";
+  $("footSrc").textContent=B.source;
+  $("footSrc2").textContent=B.source;
+}
+
+/* ===== 前言 ===== */
+function openPre(){
+  var html="";
+  B.pre.pts.forEach(function(p,i){
+    var on=!!st.pts["pre_"+i];
+    html+='<div class="pt'+(on?" on":"")+'" data-k="pre_'+i+'"><span class="box">✓</span><span class="tx">'+esc(p)+'</span></div>';
+  });
+  $("prePts").innerHTML=html;
+  $("preKey").textContent=B.quote_pre;
+  bindPts("prePts");
+  show("prePage");
+}
+$("preNext").onclick=function(){openDay(1)};
+
+/* ===== 每天页 ===== */
+var curDay=1;
+function openDay(dn){
+  curDay=dn;
+  var d=B.days[dn-1];
+  $("dayBadge").textContent="第 "+dn+" 天 · DAY "+dn;
+  $("dayTitle").textContent=d.t;
+  var html="";
+  d.pts.forEach(function(p,i){
+    var on=!!st.pts["d"+dn+"_"+i];
+    html+='<div class="pt'+(on?" on":"")+'" data-k="d'+dn+'_'+i+'"><span class="box">✓</span><span class="tx">'+esc(p)+'</span></div>';
+  });
+  $("dayPts").innerHTML=html;
+  $("dayKey").textContent=d.key;
+  $("prevDay").style.visibility=dn===1?"hidden":"visible";
+  $("nextDay").textContent=dn===11?"核查表 ›":"下一天 ›";
+  var allOn=d.pts.every(function(_,i){return st.pts["d"+dn+"_"+i]});
+  $("dayDone").className="donebanner"+(allOn?" show":"");
+  $("dayDoneTx").textContent="第 "+dn+" 天「"+d.t+"」要点全部点亮";
+  bindPts("dayPts");
+  show("dayPage");
+}
+function bindPts(host){
+  document.querySelectorAll("#"+host+" .pt").forEach(function(el){
+    el.onclick=function(){
+      var k=el.getAttribute("data-k");
+      if(st.pts[k]){delete st.pts[k];el.classList.remove("on")}
+      else{st.pts[k]=1;el.classList.add("on")}
+      save();
+      if(host==="dayPts"){
+        var dn=curDay,d=B.days[dn-1];
+        var allOn=d.pts.every(function(_,i){return st.pts["d"+dn+"_"+i]});
+        $("dayDone").className="donebanner"+(allOn?" show":"");
+        $("dayDoneTx").textContent="第 "+dn+" 天「"+d.t+"」要点全部点亮";
+        var cnt=0;d.pts.forEach(function(_,i){if(st.pts["d"+dn+"_"+i])cnt++});
+        if(allOn)toast("第 "+dn+" 天读完 ✓");
+      }
+    };
+  });
+}
+$("prevDay").onclick=function(){if(curDay>1)openDay(curDay-1)};
+$("nextDay").onclick=function(){curDay<11?openDay(curDay+1):(renderCl(),show("clPage"))};
+
+/* ===== 核查表 ===== */
+function renderCl(){
+  var html="";
+  B.checklist.forEach(function(c){
+    html+='<div class="cl-day"><div class="cd">第 '+c.d+' 天</div><div class="pts" style="margin-bottom:0">';
+    c.items.forEach(function(it,i){
+      var k="cl_"+c.d+"_"+i,on=!!st.cl[k];
+      html+='<div class="pt'+(on?" on":"")+'" data-cl="'+k+'"><span class="box">✓</span><span class="tx">'+esc(it)+'</span></div>';
+    });
+    html+='</div></div>';
+  });
+  $("clHost").innerHTML=html;
+  document.querySelectorAll("#clHost .pt").forEach(function(el){
+    el.onclick=function(){
+      var k=el.getAttribute("data-cl");
+      if(st.cl[k]){delete st.cl[k];el.classList.remove("on")}
+      else{st.cl[k]=1;el.classList.add("on")}
+      save();clStat();
+    };
+  });
+  clStat();
+}
+function clStat(){
+  var n=0;B.checklist.forEach(function(c){c.items.forEach(function(_,i){if(st.cl["cl_"+c.d+"_"+i])n++})});
+  $("clSt").textContent="已勾 "+n+" 条";
+  $("clFl").style.width=(n*100/39)+"%";
+}
+$("clEnd").onclick=function(){renderEnd();show("endPage")};
+
+/* ===== 尾页 ===== */
+function renderEnd(){
+  var pc=0;B.days.forEach(function(d,i){d.pts.forEach(function(_,pi){if(st.pts["d"+(i+1)+"_"+pi])pc++})});
+  var total=0;B.days.forEach(function(d){total+=d.pts.length});
+  var cln=0;B.checklist.forEach(function(c){c.items.forEach(function(_,i){if(st.cl["cl_"+c.d+"_"+i])cln++})});
+  $("endStats").innerHTML="要点点亮 <b>"+pc+" / "+total+"</b><br>核查表打勾 <b>"+cln+" / 39</b><br>——现在，去把今天学到的东西用一个出来。";
+}
+show("cover");
+})();
+</script>
+</body>
+</html>

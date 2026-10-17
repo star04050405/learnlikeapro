@@ -1,0 +1,25 @@
+{
+  "name": "学习之道 · 11天要点册",
+  "short_name": "学习之道",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F2E23A",
+  "theme_color": "#F2E23A",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
